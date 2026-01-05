@@ -1249,10 +1249,21 @@ header {
 
                         const pct = p.items.length ? Math.round((itemsWithReception / p.items.length) * 100) : 0;
 
-                        const div = document.createElement('div');
-                        div.className = "bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-saipem-blue cursor-pointer transition-all group relative";
-                        div.onclick = () => this.loadSavedPO(p.id);
-                        
+                        const div = document.createElement("div");
+                        div.className = "bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-saipem-blue cursor-pointer transition-all group relative focus:ring-2 focus:ring-saipem-blue focus:outline-none";
+                        div.setAttribute("role", "button");
+                        div.setAttribute("tabindex", "0");
+                        div.setAttribute("aria-label", `${this.t("saved_pos")}: ${p.poRef}, ${p.supplier}`);
+
+                        const activate = () => this.loadSavedPO(p.id);
+                        div.onclick = activate;
+                        div.onkeydown = (e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                activate();
+                            }
+                        };
+
                         div.innerHTML = `
                             <div class="flex justify-between items-start mb-2">
                                 <h4 class="font-bold text-saipem-blue text-sm">${p.poRef}</h4>
