@@ -572,6 +572,9 @@ header {
         // --- TRANSLATION DICTIONARY ---
         const TRANSLATIONS = {
             en: {
+                edit: "Edit",
+                duplicate: "Duplicate",
+                delete: "Delete",
                 processing: "Processing...",
                 undo: "Undo",
                 history: "History",
@@ -721,6 +724,9 @@ header {
                 load_edit_btn: "Load & Edit",
             },
             pt: {
+                edit: "Editar",
+                duplicate: "Duplicar",
+                delete: "Excluir",
                 processing: "Processando...",
                 undo: "Desfazer",
                 history: "Histórico",
@@ -1215,6 +1221,13 @@ header {
                     const k = el.getAttribute('data-i18n-placeholder');
                     if(TRANSLATIONS[l][k]) el.placeholder = TRANSLATIONS[l][k];
                 });
+                document.querySelectorAll('[data-i18n-label]').forEach(el => {
+                    const k = el.getAttribute('data-i18n-label');
+                    if(TRANSLATIONS[l][k]) {
+                        el.setAttribute('aria-label', TRANSLATIONS[l][k]);
+                        el.setAttribute('title', TRANSLATIONS[l][k]);
+                    }
+                });
             },
 
             async renderSavedPOs() {
@@ -1270,7 +1283,7 @@ header {
                                 <span>${this.t('dash_stats_format', {rec: p.items.length, total: ''}).replace(' / ','')}</span>
                                 <span>${new Date(p.date).toLocaleDateString()}</span>
                             </div>
-                            <button onclick="event.stopPropagation(); App.deleteSavedPO(${p.id})" class="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><i class="ph-bold ph-trash"></i></button>
+                            <button onclick="event.stopPropagation(); App.deleteSavedPO(${p.id})" aria-label="${this.t('delete')}" title="${this.t('delete')}" class="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"><i class="ph-bold ph-trash"></i></button>
                         `;
                         c.appendChild(div);
                     });
@@ -1806,9 +1819,9 @@ header {
                             <span class="text-xs text-slate-400 truncate max-w-[120px] font-medium hidden sm:block">${s.trace||''}</span>
                         </div>
                         <div class="flex gap-2">
-                            <button type="button" onclick="App.duplicateSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-copy text-lg"></i></button>
-                            <button type="button" onclick="App.editSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
-                            <button type="button" onclick="App.removeSplit('${s.id}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded hover:bg-red-50"><i class="ph-bold ph-trash text-lg"></i></button>
+                            <button type="button" onclick="App.duplicateSplit('${s.id}')" aria-label="${this.t('duplicate')}" title="${this.t('duplicate')}" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-copy text-lg"></i></button>
+                            <button type="button" onclick="App.editSplit('${s.id}')" aria-label="${this.t('edit')}" title="${this.t('edit')}" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
+                            <button type="button" onclick="App.removeSplit('${s.id}')" aria-label="${this.t('delete')}" title="${this.t('delete')}" class="text-slate-400 hover:text-red-500 p-1.5 rounded hover:bg-red-50"><i class="ph-bold ph-trash text-lg"></i></button>
                         </div>
                     `;
                     c.appendChild(div);
