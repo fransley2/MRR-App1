@@ -1,0 +1,3 @@
+## 2024-03-24 - Accessibility Patterns in Icon-Only Buttons
+**Learning:** This application makes heavy use of Phosphor icons inside buttons for actions like Delete, Edit, and Copy. These were completely inaccessible to screen readers (no text content) and often relied on `group-hover` for visibility, excluding keyboard users.
+**Action:** Always pair `aria-label` with `title` for icon-only buttons. For `opacity-0` hover actions, strictly enforce `focus:opacity-100` to ensure keyboard focus makes the control visible. Added translation keys for common verbs (Delete, Edit, Copy) to support this pattern.
