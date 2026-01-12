@@ -1,0 +1,3 @@
+## 2024-05-22 - Accessibility Keys for Icon Buttons
+**Learning:** This app relies heavily on dynamic HTML string injection for lists (Saved POs, Batches). To ensure accessibility, `aria-label` and `title` attributes must be injected during string generation using `App.t()`. For static modal buttons, I extended the `applyLanguage` function to handle `data-i18n-title` and `data-i18n-aria-label`, creating a reusable pattern for static elements.
+**Action:** When adding new static interactive elements, use `data-i18n-title` and `data-i18n-aria-label` instead of hardcoding text or attributes. For dynamic lists, always include these attributes in the template literal.
