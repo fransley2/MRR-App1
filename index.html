@@ -131,7 +131,7 @@ header {
 
     <!-- Header -->
 <header class="bg-saipem-blue text-white shadow-lg flex items-center justify-between px-3 py-2 md:px-4 md:py-3 z-20 relative flex-wrap gap-y-2">
-    <div class="flex items-center gap-2 md:gap-3 select-none cursor-pointer group" onclick="App.toScreen('uploadScreen')">
+    <div class="flex items-center gap-2 md:gap-3 select-none cursor-pointer group" onclick="App.toScreen('uploadScreen')" role="button" tabindex="0" aria-label="Go to Home" onkeydown="if(event.key==='Enter'||event.key===' '){App.toScreen('uploadScreen'); event.preventDefault();}">
         <div class="w-8 h-8 md:w-10 md:h-10 bg-saipem-yellow text-saipem-blue rounded-lg font-extrabold flex items-center justify-center text-lg md:text-xl shadow-md group-hover:scale-105 transition-transform">S</div>
         
         <div class="leading-tight">
@@ -143,12 +143,12 @@ header {
     </div>
 
     <div class="flex items-center gap-1.5 md:gap-4 ml-auto">
-        <button onclick="App.toggleLanguage()" class="flex items-center gap-1 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-3 md:py-2 rounded-lg border border-transparent hover:border-white/10" title="Change Language">
+        <button onclick="App.toggleLanguage()" class="flex items-center gap-1 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-3 md:py-2 rounded-lg border border-transparent hover:border-white/10" data-i18n-title="change_lang" title="Change Language">
             <i class="ph-bold ph-globe text-lg"></i>
             <span id="currentLangDisplay" class="font-bold uppercase text-xs">PT</span>
         </button>
 
-        <button onclick="App.toggleHistory()" class="group flex items-center gap-2 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-4 md:py-2 rounded-lg border border-transparent hover:border-white/10">
+        <button onclick="App.toggleHistory()" class="group flex items-center gap-2 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-4 md:py-2 rounded-lg border border-transparent hover:border-white/10" data-i18n-aria-label="history">
             <i class="ph ph-clock-counter-clockwise text-lg"></i>
             <span class="hidden md:inline font-medium" data-i18n="history">Histórico</span>
         </button>
@@ -460,7 +460,7 @@ header {
                         <p class="text-[10px] text-blue-200 uppercase tracking-wider font-medium" data-i18n="report_config_subtitle">Configuration & Print</p>
                     </div>
                 </div>
-                <button onclick="App.closeModal('reportConfigModal')" class="text-white/60 hover:text-white transition-colors bg-white/10 hover:bg-white/20 rounded p-1"><i class="ph-bold ph-x text-lg"></i></button>
+                <button onclick="App.closeModal('reportConfigModal')" data-i18n-aria-label="close" class="text-white/60 hover:text-white transition-colors bg-white/10 hover:bg-white/20 rounded p-1"><i class="ph-bold ph-x text-lg"></i></button>
             </div>
             
             <div class="flex-1 overflow-hidden flex flex-col md:flex-row min-h-0 relative">
@@ -562,7 +562,7 @@ header {
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden animate-slide-up m-4 max-h-[90vh] flex flex-col">
             <div class="px-5 py-3 border-b border-slate-100 bg-slate-50 flex justify-between items-center shrink-0">
                 <h3 id="genericTitle" class="font-bold text-slate-800">Title</h3>
-                <button onclick="App.closeModal('genericModal')" class="text-slate-400 hover:text-red-500 transition-colors"><i class="ph-bold ph-x text-lg"></i></button>
+                <button onclick="App.closeModal('genericModal')" data-i18n-aria-label="close" class="text-slate-400 hover:text-red-500 transition-colors"><i class="ph-bold ph-x text-lg"></i></button>
             </div>
             <div id="genericBody" class="p-5 overflow-y-auto"></div>
         </div>
@@ -719,6 +719,13 @@ header {
                 no_history: "No history found.",
                 reports_count: "{count} Reports",
                 load_edit_btn: "Load & Edit",
+                close: "Close",
+                delete: "Delete",
+                edit: "Edit",
+                copy: "Copy",
+                change_lang: "Change Language",
+                delete_po: "Delete PO",
+                delete_report: "Delete Report",
             },
             pt: {
                 processing: "Processando...",
@@ -1215,6 +1222,14 @@ header {
                     const k = el.getAttribute('data-i18n-placeholder');
                     if(TRANSLATIONS[l][k]) el.placeholder = TRANSLATIONS[l][k];
                 });
+                document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                    const k = el.getAttribute('data-i18n-title');
+                    if(TRANSLATIONS[l][k]) el.title = TRANSLATIONS[l][k];
+                });
+                document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+                    const k = el.getAttribute('data-i18n-aria-label');
+                    if(TRANSLATIONS[l][k]) el.setAttribute('aria-label', TRANSLATIONS[l][k]);
+                });
             },
 
             async renderSavedPOs() {
@@ -1270,7 +1285,7 @@ header {
                                 <span>${this.t('dash_stats_format', {rec: p.items.length, total: ''}).replace(' / ','')}</span>
                                 <span>${new Date(p.date).toLocaleDateString()}</span>
                             </div>
-                            <button onclick="event.stopPropagation(); App.deleteSavedPO(${p.id})" class="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><i class="ph-bold ph-trash"></i></button>
+                            <button aria-label="${this.t('delete_po')}" onclick="event.stopPropagation(); App.deleteSavedPO(${p.id})" class="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"><i class="ph-bold ph-trash"></i></button>
                         `;
                         c.appendChild(div);
                     });
@@ -1806,9 +1821,9 @@ header {
                             <span class="text-xs text-slate-400 truncate max-w-[120px] font-medium hidden sm:block">${s.trace||''}</span>
                         </div>
                         <div class="flex gap-2">
-                            <button type="button" onclick="App.duplicateSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-copy text-lg"></i></button>
-                            <button type="button" onclick="App.editSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
-                            <button type="button" onclick="App.removeSplit('${s.id}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded hover:bg-red-50"><i class="ph-bold ph-trash text-lg"></i></button>
+                            <button type="button" aria-label="${this.t('copy')}" onclick="App.duplicateSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-copy text-lg"></i></button>
+                            <button type="button" aria-label="${this.t('edit')}" onclick="App.editSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
+                            <button type="button" aria-label="${this.t('delete')}" onclick="App.removeSplit('${s.id}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded hover:bg-red-50"><i class="ph-bold ph-trash text-lg"></i></button>
                         </div>
                     `;
                     c.appendChild(div);
@@ -1913,7 +1928,7 @@ header {
                                     <span class="bg-green-50 px-1 rounded text-green-700">QTD: ${s.qty}</span>
                                 </div>
                             </div>
-                            <button onclick="App.editItemFromReview(${i.id}, '${s.id}')" class="text-slate-300 hover:text-saipem-blue p-2"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
+                            <button aria-label="${this.t('edit')}" onclick="App.editItemFromReview(${i.id}, '${s.id}')" class="text-slate-300 hover:text-saipem-blue p-2"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
                         `;
                         c.appendChild(div);
                     });
@@ -2168,7 +2183,7 @@ header {
                          const dateString = `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
                          return `<div class="p-4 flex flex-col md:flex-row md:items-center justify-between hover:bg-slate-50 transition-colors gap-3 border-b border-slate-100 last:border-0">
                             <div class="flex-1"><div class="flex items-center gap-3"><span class="font-bold text-saipem-blue">${h.rptNo||'NO-REF'}</span><span class="text-xs text-slate-400">${dateString}</span></div><div class="text-xs text-slate-500 mt-1">${this.t('issued_by')} <b>${h.operator||'User'}</b> • ${h.itemsCount} lines</div></div>
-                            <div class="flex gap-2 shrink-0"><button onclick="App.loadFromHistory(${h.id})" class="px-3 py-1.5 bg-white border border-saipem-blue text-saipem-blue hover:bg-blue-50 rounded text-xs font-bold shadow-sm transition-all">${this.t('load_edit_btn')}</button><button onclick="App.reprintHistory(${h.id})" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded text-xs font-bold transition-all"><i class="ph-bold ph-printer"></i></button><button onclick="App.deleteHistory(${h.id})" class="px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs font-bold transition-all"><i class="ph-bold ph-trash"></i></button></div>
+                            <div class="flex gap-2 shrink-0"><button onclick="App.loadFromHistory(${h.id})" class="px-3 py-1.5 bg-white border border-saipem-blue text-saipem-blue hover:bg-blue-50 rounded text-xs font-bold shadow-sm transition-all">${this.t('load_edit_btn')}</button><button aria-label="${this.t('print_report')}" onclick="App.reprintHistory(${h.id})" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded text-xs font-bold transition-all"><i class="ph-bold ph-printer"></i></button><button aria-label="${this.t('delete_report')}" onclick="App.deleteHistory(${h.id})" class="px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs font-bold transition-all"><i class="ph-bold ph-trash"></i></button></div>
                          </div>`;
                     }).join('');
 
