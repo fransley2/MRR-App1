@@ -574,6 +574,10 @@ header {
             en: {
                 processing: "Processing...",
                 undo: "Undo",
+                action_delete: "Delete",
+                action_edit: "Edit",
+                action_duplicate: "Duplicate",
+                action_reprint: "Reprint",
                 history: "History",
                 back: "Back",
                 import_title: "Import PO Data",
@@ -723,6 +727,10 @@ header {
             pt: {
                 processing: "Processando...",
                 undo: "Desfazer",
+                action_delete: "Excluir",
+                action_edit: "Editar",
+                action_duplicate: "Duplicar",
+                action_reprint: "Reimprimir",
                 history: "Histórico",
                 back: "Voltar",
                 import_title: "Importar Dados PO",
@@ -1270,7 +1278,7 @@ header {
                                 <span>${this.t('dash_stats_format', {rec: p.items.length, total: ''}).replace(' / ','')}</span>
                                 <span>${new Date(p.date).toLocaleDateString()}</span>
                             </div>
-                            <button onclick="event.stopPropagation(); App.deleteSavedPO(${p.id})" class="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><i class="ph-bold ph-trash"></i></button>
+                            <button onclick="event.stopPropagation(); App.deleteSavedPO(${p.id})" class="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" title="${this.t('action_delete')}" aria-label="${this.t('action_delete')}"><i class="ph-bold ph-trash"></i></button>
                         `;
                         c.appendChild(div);
                     });
@@ -1806,9 +1814,9 @@ header {
                             <span class="text-xs text-slate-400 truncate max-w-[120px] font-medium hidden sm:block">${s.trace||''}</span>
                         </div>
                         <div class="flex gap-2">
-                            <button type="button" onclick="App.duplicateSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-copy text-lg"></i></button>
-                            <button type="button" onclick="App.editSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
-                            <button type="button" onclick="App.removeSplit('${s.id}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded hover:bg-red-50"><i class="ph-bold ph-trash text-lg"></i></button>
+                            <button type="button" onclick="App.duplicateSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100" title="${this.t('action_duplicate')}" aria-label="${this.t('action_duplicate')}"><i class="ph-bold ph-copy text-lg"></i></button>
+                            <button type="button" onclick="App.editSplit('${s.id}')" class="text-slate-400 hover:text-saipem-blue p-1.5 rounded hover:bg-slate-100" title="${this.t('action_edit')}" aria-label="${this.t('action_edit')}"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
+                            <button type="button" onclick="App.removeSplit('${s.id}')" class="text-slate-400 hover:text-red-500 p-1.5 rounded hover:bg-red-50" title="${this.t('action_delete')}" aria-label="${this.t('action_delete')}"><i class="ph-bold ph-trash text-lg"></i></button>
                         </div>
                     `;
                     c.appendChild(div);
@@ -1913,7 +1921,7 @@ header {
                                     <span class="bg-green-50 px-1 rounded text-green-700">QTD: ${s.qty}</span>
                                 </div>
                             </div>
-                            <button onclick="App.editItemFromReview(${i.id}, '${s.id}')" class="text-slate-300 hover:text-saipem-blue p-2"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
+                            <button onclick="App.editItemFromReview(${i.id}, '${s.id}')" class="text-slate-300 hover:text-saipem-blue p-2" title="${this.t('action_edit')}" aria-label="${this.t('action_edit')}"><i class="ph-bold ph-pencil-simple text-lg"></i></button>
                         `;
                         c.appendChild(div);
                     });
@@ -2168,7 +2176,7 @@ header {
                          const dateString = `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
                          return `<div class="p-4 flex flex-col md:flex-row md:items-center justify-between hover:bg-slate-50 transition-colors gap-3 border-b border-slate-100 last:border-0">
                             <div class="flex-1"><div class="flex items-center gap-3"><span class="font-bold text-saipem-blue">${h.rptNo||'NO-REF'}</span><span class="text-xs text-slate-400">${dateString}</span></div><div class="text-xs text-slate-500 mt-1">${this.t('issued_by')} <b>${h.operator||'User'}</b> • ${h.itemsCount} lines</div></div>
-                            <div class="flex gap-2 shrink-0"><button onclick="App.loadFromHistory(${h.id})" class="px-3 py-1.5 bg-white border border-saipem-blue text-saipem-blue hover:bg-blue-50 rounded text-xs font-bold shadow-sm transition-all">${this.t('load_edit_btn')}</button><button onclick="App.reprintHistory(${h.id})" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded text-xs font-bold transition-all"><i class="ph-bold ph-printer"></i></button><button onclick="App.deleteHistory(${h.id})" class="px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs font-bold transition-all"><i class="ph-bold ph-trash"></i></button></div>
+                            <div class="flex gap-2 shrink-0"><button onclick="App.loadFromHistory(${h.id})" class="px-3 py-1.5 bg-white border border-saipem-blue text-saipem-blue hover:bg-blue-50 rounded text-xs font-bold shadow-sm transition-all">${this.t('load_edit_btn')}</button><button onclick="App.reprintHistory(${h.id})" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded text-xs font-bold transition-all" title="${this.t('action_reprint')}" aria-label="${this.t('action_reprint')}"><i class="ph-bold ph-printer"></i></button><button onclick="App.deleteHistory(${h.id})" class="px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs font-bold transition-all" title="${this.t('action_delete')}" aria-label="${this.t('action_delete')}"><i class="ph-bold ph-trash"></i></button></div>
                          </div>`;
                     }).join('');
 
