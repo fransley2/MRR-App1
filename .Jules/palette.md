@@ -1,0 +1,3 @@
+## 2024-05-22 - [Accessibilty] Dynamic & Static Icon Buttons
+**Learning:** This SPA heavily relies on Phosphor icons for actions (Trash, Copy, Pencil) without text labels. These are rendered both statically (HTML) and dynamically (JS strings). The dynamic nature makes standard static analysis tools insufficient. A pattern was established to use `data-i18n-aria-label` for static elements and direct `aria-label="${this.t('...')}"` injection for dynamic strings.
+**Action:** When adding new interactive icons, always check if it's static (use data attr) or dynamic (use template string injection) and ensure the translation key exists.
