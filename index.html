@@ -148,14 +148,14 @@ header {
             <span id="currentLangDisplay" class="font-bold uppercase text-xs">PT</span>
         </button>
 
-        <button onclick="App.toggleHistory()" class="group flex items-center gap-2 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-4 md:py-2 rounded-lg border border-transparent hover:border-white/10">
+        <button onclick="App.toggleHistory()" data-i18n-aria-label="history" class="group flex items-center gap-2 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-4 md:py-2 rounded-lg border border-transparent hover:border-white/10">
             <i class="ph ph-clock-counter-clockwise text-lg"></i>
             <span class="hidden md:inline font-medium" data-i18n="history">Histórico</span>
         </button>
 
         <div class="h-6 md:h-8 w-px bg-white/10 mx-0.5 md:mx-1"></div>
 
-        <button onclick="App.openUserConfig()" class="flex items-center gap-2 md:gap-3 hover:bg-white/5 p-1 rounded-lg transition-colors border border-transparent hover:border-white/10">
+        <button onclick="App.openUserConfig()" data-i18n-aria-label="user_settings" class="flex items-center gap-2 md:gap-3 hover:bg-white/5 p-1 rounded-lg transition-colors border border-transparent hover:border-white/10">
             <div class="text-right hidden sm:block leading-tight">
                 <p class="text-xs font-bold text-white truncate max-w-[100px]" id="headerUserName" data-i18n-placeholder="user_generic">Suman Marcio</p>
                 <p class="text-[10px] text-blue-300 font-medium" id="headerUserRole" data-i18n-placeholder="role_generic">Storekeeper (PPC)</p>
@@ -2252,7 +2252,7 @@ header {
                         <div class="flex items-center gap-3">
                             <div class="w-20 h-10 border border-slate-300 bg-white flex items-center justify-center overflow-hidden rounded"><img id="uSigPreview" src="${u.sigImg||''}" class="${u.sigImg?'':'hidden'} max-h-full max-w-full"><span class="${u.sigImg?'hidden':''} text-[9px] text-slate-300">${this.t('no_img')}</span></div>
                             <label class="cursor-pointer bg-white border border-slate-300 hover:border-saipem-blue text-slate-600 px-3 py-1.5 rounded text-xs font-bold transition-all">${this.t('upload_img')}<input type="file" accept="image/*" class="hidden" onchange="App.handleSigUpload(this, 'uSigPreview')"></label>
-                            <button onclick="document.getElementById('uSigPreview').src=''; document.getElementById('uSigPreview').classList.add('hidden');" class="text-red-400 hover:text-red-600 p-1"><i class="ph-bold ph-trash"></i></button>
+                            <button onclick="document.getElementById('uSigPreview').src=''; document.getElementById('uSigPreview').classList.add('hidden');" aria-label="${this.t('action_delete')}" class="text-red-400 hover:text-red-600 p-1"><i class="ph-bold ph-trash"></i></button>
                         </div>
                         <p class="text-[10px] text-slate-400 mt-2">${this.t('sig_tooltip')}</p>
                     </div>
