@@ -97,6 +97,7 @@ header {
 		.item-card { height: auto; }
         .trans-all { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .sig-preview { max-height: 40px; max-width: 100px; object-fit: contain; display: block; margin-top: 5px; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
     </style>
 </head>
 <body class="h-screen flex flex-col text-slate-800 overflow-hidden bg-slate-100">
@@ -181,12 +182,12 @@ header {
                             <p class="text-slate-500 text-sm leading-relaxed font-medium" data-i18n="import_msg">Upload Packing List or PO to start.</p>
                         </div>
 
-                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue transition-all group">
+                        <label id="dropZone" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue focus-within:ring-4 focus-within:ring-blue-100 transition-all group">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <i class="ph-bold ph-upload-simple text-2xl text-slate-400 group-hover:text-saipem-blue mb-2 transition-colors"></i>
                                 <p class="text-sm text-slate-500 font-bold group-hover:text-saipem-blue transition-colors" data-i18n="click_to_upload">Click to upload Excel/CSV</p>
                             </div>
-                            <input type="file" id="fileInput" class="hidden" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
+                            <input type="file" id="fileInput" class="sr-only" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
                         </label>
 
                         <div class="mt-8 flex items-center gap-4">
@@ -1179,6 +1180,7 @@ header {
         window.App = {
             async init() {
                 await core.start();
+                this.setupDragDrop();
                 this.applyLanguage();
                 this.renderHeader();
                 this.renderSavedPOs();
@@ -1196,6 +1198,35 @@ header {
                         this.renderListChunk();
                     }
                 });
+            },
+
+            setupDragDrop() {
+                const dropZone = document.getElementById('dropZone');
+                if(!dropZone) return;
+
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.add('border-saipem-blue', 'bg-blue-50', 'scale-[1.02]');
+                        dropZone.classList.remove('border-slate-300', 'bg-slate-50');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.remove('border-saipem-blue', 'bg-blue-50', 'scale-[1.02]');
+                        dropZone.classList.add('border-slate-300', 'bg-slate-50');
+                    }, false);
+                });
+
+                dropZone.addEventListener('drop', (e) => {
+                    if(e.dataTransfer.files && e.dataTransfer.files.length) {
+                        this.handleFile({ files: e.dataTransfer.files });
+                    }
+                }, false);
             },
 
             t(key, params = {}) {
