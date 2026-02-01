@@ -51,6 +51,18 @@
 
 
     <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
 	/* Adicione isso no topo da sua tag <style> */
 :root {
     /* Cores Base (Tema Claro) */
@@ -181,12 +193,12 @@ header {
                             <p class="text-slate-500 text-sm leading-relaxed font-medium" data-i18n="import_msg">Upload Packing List or PO to start.</p>
                         </div>
 
-                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue transition-all group">
+                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue transition-all group focus-within:ring-2 focus-within:ring-saipem-blue focus-within:ring-offset-2">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <i class="ph-bold ph-upload-simple text-2xl text-slate-400 group-hover:text-saipem-blue mb-2 transition-colors"></i>
                                 <p class="text-sm text-slate-500 font-bold group-hover:text-saipem-blue transition-colors" data-i18n="click_to_upload">Click to upload Excel/CSV</p>
                             </div>
-                            <input type="file" id="fileInput" class="hidden" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
+                            <input type="file" id="fileInput" class="sr-only" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
                         </label>
 
                         <div class="mt-8 flex items-center gap-4">
@@ -2251,7 +2263,7 @@ header {
                         <p class="text-[10px] uppercase font-bold text-saipem-blue mb-3">${this.t('my_sig')}</p>
                         <div class="flex items-center gap-3">
                             <div class="w-20 h-10 border border-slate-300 bg-white flex items-center justify-center overflow-hidden rounded"><img id="uSigPreview" src="${u.sigImg||''}" class="${u.sigImg?'':'hidden'} max-h-full max-w-full"><span class="${u.sigImg?'hidden':''} text-[9px] text-slate-300">${this.t('no_img')}</span></div>
-                            <label class="cursor-pointer bg-white border border-slate-300 hover:border-saipem-blue text-slate-600 px-3 py-1.5 rounded text-xs font-bold transition-all">${this.t('upload_img')}<input type="file" accept="image/*" class="hidden" onchange="App.handleSigUpload(this, 'uSigPreview')"></label>
+                            <label class="cursor-pointer bg-white border border-slate-300 hover:border-saipem-blue text-slate-600 px-3 py-1.5 rounded text-xs font-bold transition-all focus-within:ring-2 focus-within:ring-saipem-blue focus-within:ring-offset-1">${this.t('upload_img')}<input type="file" accept="image/*" class="sr-only" onchange="App.handleSigUpload(this, 'uSigPreview')"></label>
                             <button onclick="document.getElementById('uSigPreview').src=''; document.getElementById('uSigPreview').classList.add('hidden');" class="text-red-400 hover:text-red-600 p-1"><i class="ph-bold ph-trash"></i></button>
                         </div>
                         <p class="text-[10px] text-slate-400 mt-2">${this.t('sig_tooltip')}</p>
@@ -2267,7 +2279,7 @@ header {
                         <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-3">${this.t('db_management')}</h4>
                         <div class="flex gap-3">
                            <button onclick="App.exportBackup()" class="flex-1 text-sm font-bold text-green-600 hover:bg-green-50 border border-green-200 rounded-lg p-3 transition-colors">${this.t('export_json')}</button>
-                           <label class="flex-1 text-sm font-bold text-blue-600 hover:bg-blue-50 border border-blue-200 rounded-lg p-3 transition-colors cursor-pointer text-center">${this.t('import_json')}<input type="file" class="hidden" accept=".json" onchange="App.importBackup(this)"></label>
+                           <label class="flex-1 text-sm font-bold text-blue-600 hover:bg-blue-50 border border-blue-200 rounded-lg p-3 transition-colors cursor-pointer text-center focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2">${this.t('import_json')}<input type="file" class="sr-only" accept=".json" onchange="App.importBackup(this)"></label>
                         </div>
                     </div>
                     <div class="border-t border-slate-100 pt-4 flex justify-between">
