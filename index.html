@@ -181,12 +181,12 @@ header {
                             <p class="text-slate-500 text-sm leading-relaxed font-medium" data-i18n="import_msg">Upload Packing List or PO to start.</p>
                         </div>
 
-                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue transition-all group">
+                        <label class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue focus-within:ring-2 focus-within:ring-saipem-blue focus-within:ring-offset-2 transition-all group">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <i class="ph-bold ph-upload-simple text-2xl text-slate-400 group-hover:text-saipem-blue mb-2 transition-colors"></i>
                                 <p class="text-sm text-slate-500 font-bold group-hover:text-saipem-blue transition-colors" data-i18n="click_to_upload">Click to upload Excel/CSV</p>
                             </div>
-                            <input type="file" id="fileInput" class="hidden" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
+                            <input type="file" id="fileInput" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
                         </label>
 
                         <div class="mt-8 flex items-center gap-4">
