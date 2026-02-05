@@ -1196,6 +1196,19 @@ header {
                         this.renderListChunk();
                     }
                 });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                         const isVisible = (id) => !document.getElementById(id).classList.contains('hidden');
+
+                         if (isVisible('historyScreen')) { App.closeHistory(); return; }
+                         if (isVisible('savePOModal')) { App.closeModal('savePOModal'); return; }
+                         if (isVisible('genericModal')) { App.closeModal('genericModal'); return; }
+                         if (isVisible('surplusModal')) { App.cancelSurplus(); return; }
+                         if (isVisible('reportConfigModal')) { App.closeModal('reportConfigModal'); return; }
+                         if (isVisible('splitModal')) { App.closeModal('splitModal'); return; }
+                    }
+                });
             },
 
             t(key, params = {}) {
