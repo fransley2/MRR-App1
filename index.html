@@ -148,14 +148,14 @@ header {
             <span id="currentLangDisplay" class="font-bold uppercase text-xs">PT</span>
         </button>
 
-        <button onclick="App.toggleHistory()" class="group flex items-center gap-2 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-4 md:py-2 rounded-lg border border-transparent hover:border-white/10">
+        <button onclick="App.toggleHistory()" data-i18n-aria-label="history" class="group flex items-center gap-2 text-sm text-blue-100 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-4 md:py-2 rounded-lg border border-transparent hover:border-white/10">
             <i class="ph ph-clock-counter-clockwise text-lg"></i>
             <span class="hidden md:inline font-medium" data-i18n="history">Histórico</span>
         </button>
 
         <div class="h-6 md:h-8 w-px bg-white/10 mx-0.5 md:mx-1"></div>
 
-        <button onclick="App.openUserConfig()" class="flex items-center gap-2 md:gap-3 hover:bg-white/5 p-1 rounded-lg transition-colors border border-transparent hover:border-white/10">
+        <button onclick="App.openUserConfig()" data-i18n-aria-label="user_settings" class="flex items-center gap-2 md:gap-3 hover:bg-white/5 p-1 rounded-lg transition-colors border border-transparent hover:border-white/10">
             <div class="text-right hidden sm:block leading-tight">
                 <p class="text-xs font-bold text-white truncate max-w-[100px]" id="headerUserName" data-i18n-placeholder="user_generic">Suman Marcio</p>
                 <p class="text-[10px] text-blue-300 font-medium" id="headerUserRole" data-i18n-placeholder="role_generic">Storekeeper (PPC)</p>
@@ -181,12 +181,12 @@ header {
                             <p class="text-slate-500 text-sm leading-relaxed font-medium" data-i18n="import_msg">Upload Packing List or PO to start.</p>
                         </div>
 
-                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue transition-all group">
+                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-saipem-blue transition-all group relative focus-within:ring-2 focus-within:ring-saipem-blue focus-within:ring-offset-2">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <i class="ph-bold ph-upload-simple text-2xl text-slate-400 group-hover:text-saipem-blue mb-2 transition-colors"></i>
                                 <p class="text-sm text-slate-500 font-bold group-hover:text-saipem-blue transition-colors" data-i18n="click_to_upload">Click to upload Excel/CSV</p>
                             </div>
-                            <input type="file" id="fileInput" class="hidden" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
+                            <input type="file" id="fileInput" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" accept=".xlsx,.xls,.csv" onchange="App.handleFile(this)">
                         </label>
 
                         <div class="mt-8 flex items-center gap-4">
